@@ -1,22 +1,17 @@
 import { useState } from "react";
 import Answer from "./Answer";
 import Button from "./Button";
-export default function Question({ question }) {
+
+export default function Question({
+  question,
+  handleSelectAnswer,
+  handleCheckAnswer,
+  handleNextQuestion,
+}) {
   const [selectedAnswerId, setSelectedAnswerId] = useState(null);
 
   function handleSelectAnswer(answerId) {
     setSelectedAnswerId(answerId);
-  }
-
-  function handleCheckAnswer(answerId) {
-    const correctAnswer = question.answers.filter(
-      (answer) => answer.isCorrect === true
-    )[0];
-    if (answerId === correctAnswer.id) {
-      console.log("You selected the right answer!");
-    } else {
-      console.log("You've selected incorrect answer :(");
-    }
   }
 
   return (
@@ -36,11 +31,14 @@ export default function Question({ question }) {
           );
         })}
       </ul>
+      {}
       <Button
-        handleClick={handleCheckAnswer}
+        handleClick={
+          !question.isAnswered ? handleCheckAnswer : handleNextQuestion
+        }
         selectedAnswerId={selectedAnswerId}
       >
-        Check answer
+        {!question.isAnswered ? "Check answer" : "Next question"}
       </Button>
     </div>
   );
