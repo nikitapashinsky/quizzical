@@ -1,9 +1,13 @@
 import Game from "./components/Game";
-import "@fontsource/space-grotesk/variable.css";
+import "@fontsource/work-sans/variable.css";
 
 function App() {
+  const minHeight = window.innerHeight;
   return (
-    <div className="mx-auto flex h-screen max-w-md flex-col items-center justify-center gap-4 p-12 text-center">
+    <div
+      style={{ minHeight: minHeight + "px" }}
+      className="mx-auto flex w-full max-w-[428px] flex-col items-center justify-center p-6"
+    >
       <Game />
     </div>
   );

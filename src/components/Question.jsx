@@ -1,28 +1,42 @@
-import { useState } from "react";
 import Answer from "./Answer";
 import Button from "./Button";
 
 export default function Question({
   question,
+  currentQuestionIndex,
+  selectedAnswerId,
   handleSelectAnswer,
   handleCheckAnswer,
   handleNextQuestion,
 }) {
-  const [selectedAnswerId, setSelectedAnswerId] = useState(null);
-
-  function handleSelectAnswer(answerId) {
-    setSelectedAnswerId(answerId);
+  let buttonLabel;
+  if (!question.isAnswered) {
+    buttonLabel = "Check answer";
+  } else if (question.isAnswered && currentQuestionIndex < 5) {
+    buttonLabel = "Next question";
+  } else if (question.isAnswered && currentQuestionIndex === 5) {
+    buttonLabel = "Finish game";
   }
 
+  console.log(currentQuestionIndex);
+
   return (
-    <div className="flex flex-col gap-12">
-      <h1 className="text-3xl font-medium dark:text-zinc-50">
+    <div className="flex h-full w-full grow flex-col items-center justify-center gap-16">
+      <div className="relative flex h-3 w-full overflow-hidden rounded-full bg-stone-200">
+        <div
+          className={`absolute block h-full w-${
+            currentQuestionIndex < 5 && currentQuestionIndex + 1
+          }/6 ${currentQuestionIndex === 5 && `w-full`} bg-sky-500`}
+        ></div>
+      </div>
+      <h1 className="max-w-xs text-center text-2xl font-bold text-stone-800">
         {question.question}
       </h1>
-      <ul className="flex flex-col gap-4">
+      <ul className="flex w-full flex-1 grow-0 flex-col justify-center gap-3">
         {question.answers.map((answer, index) => {
           return (
             <Answer
+              question={question}
               key={index}
               answer={answer}
               selectedAnswerId={selectedAnswerId}
@@ -31,14 +45,15 @@ export default function Question({
           );
         })}
       </ul>
-      {}
       <Button
-        handleClick={
-          !question.isAnswered ? handleCheckAnswer : handleNextQuestion
-        }
-        selectedAnswerId={selectedAnswerId}
+        disabled={!question.answers.some((answer) => answer.isSelected)}
+        handleClick={() => {
+          !question.isAnswered
+            ? handleCheckAnswer(selectedAnswerId)
+            : handleNextQuestion(selectedAnswerId);
+        }}
       >
-        {!question.isAnswered ? "Check answer" : "Next question"}
+        {buttonLabel}
       </Button>
     </div>
   );

@@ -1,10 +1,15 @@
-export default function Button({ children, handleClick, selectedAnswerId }) {
+export default function Button({ children, handleClick, disabled }) {
   return (
     <button
-      onClick={() => handleClick(selectedAnswerId)}
-      className="flex h-14 items-center justify-center rounded-[20px] border-[3px] border-gray-900 bg-violet-200 py-4 px-5 text-lg font-medium shadow-[0_3px_0_#111827] transition-all hover:-translate-y-[2px] hover:shadow-[0_5px_0_#111827] active:translate-y-[2px] active:shadow-[0_1px_0_#111827] dark:border-zinc-800 dark:bg-violet-400 dark:text-slate-900 dark:shadow-[0_3px_0_#27272a,inset_0_3px_0_#c4b5fd] dark:hover:shadow-[0_5px_0_#27272a] dark:active:shadow-[0_1px_0_#27272a]"
+      disabled={disabled}
+      onClick={() => handleClick()}
+      className={`flex w-full items-center justify-center self-center rounded-2xl bg-sky-400 px-10 py-3 font-semibold text-white hover:bg-sky-500 active:bg-sky-500 ${
+        disabled
+          ? `cursor-not-allowed bg-sky-200 hover:bg-sky-200 active:bg-sky-200`
+          : ""
+      }`}
     >
-      {children}
+      <span className="drop-shadow-sm">{children}</span>
     </button>
   );
 }

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply bg-gray-50 dark:bg-zinc-700;
+@layer base {
+  html {
+    @apply bg-white;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
 }
