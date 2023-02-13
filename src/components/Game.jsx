@@ -1,37 +1,40 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import he from "he";
 import { nanoid } from "nanoid";
 import { shuffle } from "lodash";
 
 import Question from "./Question";
+import Start from "./Start";
+import End from "./End";
 
 export default function Game() {
-  const [loading, setLoading] = useState(false);
   const [gameState, setGameState] = useState("start"); // start, game, gameEnd
   const [score, setScore] = useState(0);
   const [questions, setQuestions] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswerId, setSelectedAnswerId] = useState(null);
+  const [categoryId, setCategoryId] = useState(0);
+  const [difficultyLevel, setDifficultyLevel] = useState("easy");
 
   async function getQuestions() {
     try {
-      setLoading(true);
       const res = await fetch(
-        `https://opentdb.com/api.php?amount=6&difficulty=easy&type=multiple`
+        `https://opentdb.com/api.php?amount=6${
+          categoryId !== 0 ? `&category=${categoryId}` : ""
+        }&difficulty=${difficultyLevel}&type=multiple`
       );
       const response = res;
-      setLoading(false);
       const data = await response.json();
+      console.log(data);
       createQuestions(data.results);
-    } catch {
-      setLoading(false);
+    } catch (error) {
+      console.log({ error });
     }
   }
 
   useEffect(() => {
     getQuestions();
-  }, []);
+  }, [gameState]);
 
   function createQuestions(data) {
     const nextQuestions = data.map((question) => {
@@ -92,8 +95,6 @@ export default function Game() {
       : setScore(score);
   }
 
-  console.log(gameState);
-
   function handleNextQuestion() {
     if (currentQuestionIndex < 5) {
       setCurrentQuestionIndex((prevQuestion) => prevQuestion + 1);
@@ -104,18 +105,39 @@ export default function Game() {
     }
   }
 
+  function handleStartClick() {
+    console.log(difficultyLevel);
+    setGameState("game");
+  }
+
+  function handleEndClick(state) {
+    setQuestions(null);
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setGameState(state);
+  }
+
+  function handleSelectDifficulty(level) {
+    const nextLevel = level;
+    setDifficultyLevel(nextLevel);
+    console.log(nextLevel);
+  }
+
+  function handleSelectCategory(categoryId) {
+    const nextCategoryId = categoryId;
+    setCategoryId(nextCategoryId);
+  }
+
   return (
     <>
-      {loading && <p>Loading…</p>}
       {gameState === "start" && (
-        <div>
-          <button
-            onClick={() => setGameState("game")}
-            className="flex items-center justify-center self-center rounded-full bg-sky-400 px-10 py-4 text-lg font-semibold text-white hover:bg-sky-500 active:bg-sky-500"
-          >
-            Start the game
-          </button>
-        </div>
+        <Start
+          categoryId={categoryId}
+          handleSelectCategory={handleSelectCategory}
+          difficultyLevel={difficultyLevel}
+          handleSelectDifficulty={handleSelectDifficulty}
+          handleStartClick={handleStartClick}
+        />
       )}
       {gameState === "game" && questions && (
         <>
@@ -130,23 +152,7 @@ export default function Game() {
         </>
       )}
       {gameState === "gameEnd" && (
-        <div className="flex flex-col items-center justify-center gap-12">
-          <h1 className="max-w-xs text-center text-2xl font-bold text-stone-800">
-            You answered correctly {score}&nbsp;out of 6 questions!
-          </h1>
-          <button
-            onClick={() => {
-              setQuestions(null);
-              setCurrentQuestionIndex(0);
-              setScore(0);
-              getQuestions();
-              setGameState("game");
-            }}
-            className="flex items-center justify-center self-center rounded-full bg-sky-400 px-10 py-4 text-lg font-semibold text-white hover:bg-sky-500 active:bg-sky-500"
-          >
-            Play again?
-          </button>
-        </div>
+        <End score={score} handleEndClick={handleEndClick} />
       )}
     </>
   );
