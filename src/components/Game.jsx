@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import he from "he";
 import { nanoid } from "nanoid";
 import { shuffle } from "lodash";
@@ -15,6 +15,7 @@ export default function Game() {
   const [selectedAnswerId, setSelectedAnswerId] = useState(null);
   const [categoryId, setCategoryId] = useState(0);
   const [difficultyLevel, setDifficultyLevel] = useState("easy");
+  const refGameState = useRef(gameState);
 
   async function getQuestions() {
     try {
@@ -33,6 +34,8 @@ export default function Game() {
   }
 
   useEffect(() => {
+    if (refGameState.current === gameState) return;
+    refGameState.current = gameState;
     getQuestions();
   }, [gameState]);
 

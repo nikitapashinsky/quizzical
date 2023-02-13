@@ -11,7 +11,12 @@ export default function Start({
 }) {
   return (
     <div className="flex flex-col items-center justify-center gap-12">
-      <h1 className="text-5xl font-black text-stone-800">Quizzical</h1>
+      <div className="flex flex-col items-center gap-4 text-center">
+        <h1 className="text-5xl font-black text-stone-800">Quizzical</h1>
+        <h3 className="text-lg font-medium text-stone-500">
+          Play stupid games, win stupid prizes!
+        </h3>
+      </div>
       <div className="flex flex-col items-center gap-6">
         <h2 className="font-semibold text-stone-500">Choose difficulty</h2>
         <ul className="flex gap-3">
