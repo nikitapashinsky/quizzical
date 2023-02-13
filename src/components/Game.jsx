@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import he from "he";
 import { nanoid } from "nanoid";
 import { shuffle } from "lodash";
+import axios from "axios";
 
 import Question from "./Question";
 import Start from "./Start";
@@ -15,22 +16,30 @@ export default function Game() {
   const [selectedAnswerId, setSelectedAnswerId] = useState(null);
   const [categoryId, setCategoryId] = useState(0);
   const [difficultyLevel, setDifficultyLevel] = useState("easy");
+  const [sessionToken, setSessionToken] = useState("");
   const refGameState = useRef(gameState);
 
+  useEffect(() => {
+    axios
+      .get(`https://opentdb.com/api_token.php?command=request`)
+      .then((response) => setSessionToken(response.data.token))
+      .catch((error) => console.log(error));
+  }, []);
+
+  console.log(sessionToken);
+
   async function getQuestions() {
-    try {
-      const res = await fetch(
+    axios
+      .get(
         `https://opentdb.com/api.php?amount=6${
           categoryId !== 0 ? `&category=${categoryId}` : ""
-        }&difficulty=${difficultyLevel}&type=multiple`
-      );
-      const response = res;
-      const data = await response.json();
-      console.log(data);
-      createQuestions(data.results);
-    } catch (error) {
-      console.log({ error });
-    }
+        }&difficulty=${difficultyLevel}&type=multiple&token=${sessionToken}`
+      )
+      .then((response) => {
+        console.log(response);
+        createQuestions(response.data.results);
+      })
+      .catch((error) => console.log(error));
   }
 
   useEffect(() => {
