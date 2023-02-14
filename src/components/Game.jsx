@@ -9,7 +9,7 @@ import Start from "./Start";
 import End from "./End";
 
 export default function Game() {
-  const [gameState, setGameState] = useState("start"); // start, game, gameEnd
+  const [gameState, setGameState] = useState("start");
   const [score, setScore] = useState(0);
   const [questions, setQuestions] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -19,15 +19,6 @@ export default function Game() {
   const [sessionToken, setSessionToken] = useState("");
   const refGameState = useRef(gameState);
 
-  useEffect(() => {
-    axios
-      .get(`https://opentdb.com/api_token.php?command=request`)
-      .then((response) => setSessionToken(response.data.token))
-      .catch((error) => console.log(error));
-  }, []);
-
-  console.log(sessionToken);
-
   async function getQuestions() {
     axios
       .get(
@@ -36,17 +27,41 @@ export default function Game() {
         }&difficulty=${difficultyLevel}&type=multiple&token=${sessionToken}`
       )
       .then((response) => {
-        console.log(response);
-        createQuestions(response.data.results);
+        const data = response.data;
+        if (data.response_code === 0) {
+          createQuestions(data.results);
+        } else {
+          resetToken();
+        }
       })
       .catch((error) => console.log(error));
   }
+
+  async function resetToken() {
+    axios
+      .get(
+        `https://opentdb.com/api_token.php?command=reset&token=${sessionToken}`
+      )
+      .then((response) => setSessionToken(response.data.token))
+      .catch((error) => console.log(error));
+  }
+
+  useEffect(() => {
+    axios
+      .get(`https://opentdb.com/api_token.php?command=request`)
+      .then((response) => setSessionToken(response.data.token))
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     if (refGameState.current === gameState) return;
     refGameState.current = gameState;
     getQuestions();
   }, [gameState]);
+
+  useEffect(() => {
+    resetToken();
+  }, []);
 
   function createQuestions(data) {
     const nextQuestions = data.map((question) => {
