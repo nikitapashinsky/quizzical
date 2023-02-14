@@ -17,11 +17,11 @@ export default function Start({
           Play stupid games, win stupid prizes!
         </h3>
       </div>
-      <div className="flex flex-col items-center gap-6">
+      <div className="flex w-full flex-col items-center gap-6">
         <h2 className="font-semibold text-stone-500">Choose difficulty</h2>
-        <ul className="flex gap-3">
+        <ul className="flex w-full">
           {LEVELS.map((level, index) => (
-            <li key={index}>
+            <li key={index} className="group box-border w-full flex-1 grow">
               <input
                 type="radio"
                 id={level}
@@ -36,8 +36,16 @@ export default function Start({
               <label
                 htmlFor={level}
                 className={`
-                      relative z-10 flex w-full cursor-pointer items-center justify-center rounded-[36px] border-2 border-stone-200 bg-white  py-3 px-7
-                       text-center font-semibold text-stone-800 hover:border-stone-300 hover:bg-white active:border-stone-300 active:bg-white peer-checked:border-sky-500 peer-checked:bg-white peer-checked:text-sky-600 peer-focus-visible:border-sky-500
+                      relative z-10 flex w-full cursor-pointer items-center justify-center rounded-[36px] border-2 border-stone-200 bg-white py-3 px-7
+                       text-center font-semibold text-stone-800 hover:border-stone-300 hover:bg-white active:border-stone-300 active:bg-white 
+                       group-first:rounded-r-none group-first:border-r-0 group-first:pr-6
+                       group-first:hover:shadow-[2px_0_0_#d6d3d1] group-last:rounded-l-none 
+                       group-last:border-l-0 group-last:pl-6 group-last:hover:shadow-[-2px_0_0_#d6d3d1]
+                       group-even:rounded-none 
+                       peer-checked:z-30 peer-checked:border-sky-500 peer-checked:bg-white 
+                       peer-checked:text-sky-600 group-first:peer-checked:shadow-[2px_0_0_#0ea5e9]
+                       group-last:peer-checked:shadow-[-2px_0_0_#0ea5e9] 
+                       peer-hover:z-20  peer-focus-visible:border-sky-500
                       `}
               >
                 {capitalize(level)}
