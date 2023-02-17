@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Work SansVariable"],
+        serif: ["Source Serif Pro"],
       },
       boxShadow: {
         resting: `

@@ -51,7 +51,9 @@ const Answer = forwardRef(
               animate={{ scale: 1, y: 4 }}
             />
           )}
-          <motion.span layout>{answer.answer}</motion.span>
+          <motion.span layout transition={{ delay: -0.1 }}>
+            {answer.answer}
+          </motion.span>
         </motion.label>
       </li>
     );

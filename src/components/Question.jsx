@@ -79,9 +79,9 @@ const Question = forwardRef(
             initial="initial"
             animate="animate"
             exit="exit"
-            className="flex max-h-[380px] w-full flex-1 items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white p-6 text-center shadow-resting shadow-stone-900/[0.01]"
+            className="flex max-h-[380px] w-full flex-1 items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white p-8 text-center shadow-resting shadow-stone-900/[0.01]"
           >
-            <h1 className="max-w-xs text-2xl font-bold text-stone-800 ">
+            <h1 className="max-w-xs font-serif text-3xl font-bold leading-10 text-stone-800 ">
               {question.question}
             </h1>
           </motion.div>
@@ -114,6 +114,7 @@ const Question = forwardRef(
             </motion.ul>
           </AnimatePresence>
           <Button
+            variant="primary"
             disabled={!question.answers.some((answer) => answer.isSelected)}
             handleClick={() => {
               !question.isAnswered

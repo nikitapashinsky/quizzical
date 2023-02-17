@@ -3,6 +3,7 @@ import { LEVELS } from "./data";
 import { CATEGORIES } from "./data";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
+import Button from "./Button";
 
 const Start = forwardRef(
   (
@@ -26,7 +27,9 @@ const Start = forwardRef(
         className="flex flex-col items-center justify-center gap-12"
       >
         <div className="flex flex-col items-center gap-4 text-center">
-          <h1 className="text-5xl font-black text-stone-800">Quizzical</h1>
+          <h1 className="font-serif text-6xl font-black text-stone-800">
+            Quizzical
+          </h1>
           <h3 className="text-lg font-medium text-stone-500">
             Play stupid games, win stupid prizes!
           </h3>
@@ -106,14 +109,9 @@ const Start = forwardRef(
             ))}
           </ul>
         </div>
-        <button
-          onClick={handleStartClick}
-          className="group select-none rounded-2xl bg-sky-600"
-        >
-          <span className="block -translate-y-[6px] rounded-2xl bg-sky-500 px-6 py-3 font-semibold text-white transition will-change-transform group-hover:-translate-y-[8px] group-hover:brightness-110 group-active:-translate-y-[2px]">
-            Start the game
-          </span>
-        </button>
+        <Button variant="primary" handleClick={handleStartClick}>
+          Start the game
+        </Button>
       </div>
     );
   }

@@ -167,7 +167,7 @@ export default function Game() {
             exit={{
               opacity: 0,
               scale: 0.95,
-              transition: { duration: 0.15 },
+              transition: { type: "spring", duration: 0.75, bounce: 0.18 },
             }}
             transition={{ type: "spring", duration: 1, bounce: 0.25 }}
             categoryId={categoryId}
@@ -183,7 +183,11 @@ export default function Game() {
             key="question"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{
+              opacity: 0,
+              scale: 0.9,
+              transition: { type: "spring", duration: 0.75, bounce: 0.18 },
+            }}
             question={questions[currentQuestionIndex]}
             currentQuestionIndex={currentQuestionIndex}
             selectedAnswerId={selectedAnswerId}

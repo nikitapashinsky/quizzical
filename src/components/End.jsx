@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
+import Button from "./Button";
 
 const End = forwardRef(({ score, handleEndClick }, ref) => {
   return (
@@ -7,19 +8,13 @@ const End = forwardRef(({ score, handleEndClick }, ref) => {
       <h1 className="max-w-xs text-center text-2xl font-bold text-stone-800">
         You answered correctly {score}&nbsp;out of 6 questions!
       </h1>
-      <div className="flex flex-col gap-4">
-        <button
-          onClick={() => handleEndClick("game")}
-          className="flex items-center justify-center self-center rounded-full bg-sky-400 px-6 py-3  font-semibold text-white hover:bg-sky-500 active:bg-sky-500"
-        >
+      <div className="flex w-full flex-col gap-4">
+        <Button variant="primary" handleClick={() => handleEndClick("game")}>
           Play again
-        </button>
-        <button
-          onClick={() => handleEndClick("start")}
-          className="flex items-center justify-center self-center rounded-full bg-stone-200 px-6 py-3  font-semibold text-stone-800 hover:bg-stone-300 active:bg-stone-300"
-        >
+        </Button>
+        <Button variant="secondary" handleClick={() => handleEndClick("start")}>
           Return to menu
-        </button>
+        </Button>
       </div>
     </div>
   );
