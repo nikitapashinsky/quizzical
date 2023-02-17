@@ -6,7 +6,7 @@ function App() {
   return (
     <div
       style={{ minHeight: minHeight + "px" }}
-      className="mx-auto flex w-full max-w-[428px] flex-col items-center justify-center p-6"
+      className="mx-auto flex w-full max-w-[428px] flex-col justify-center p-6"
     >
       <Game />
     </div>

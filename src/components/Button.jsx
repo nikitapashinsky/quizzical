@@ -4,13 +4,11 @@ export default function Button({ children, handleClick, disabled }) {
       type="submit"
       disabled={disabled}
       onClick={() => handleClick()}
-      className={`flex w-full items-center justify-center self-center rounded-2xl bg-sky-400 px-10 py-3 font-semibold text-white hover:bg-sky-500 active:bg-sky-500 ${
-        disabled
-          ? `cursor-not-allowed bg-sky-200 hover:bg-sky-200 active:bg-sky-200`
-          : ""
+      className={`flex min-h-[52px] w-full items-center justify-center self-center rounded-[20px] bg-cyan-800 py-3 font-semibold text-cyan-50 hover:bg-cyan-900 active:bg-cyan-900 ${
+        disabled ? `cursor-not-allowed opacity-40` : ""
       }`}
     >
-      <span className="drop-shadow-sm">{children}</span>
+      <span className="drop-shadow-md">{children}</span>
     </button>
   );
 }

@@ -1,6 +1,9 @@
-export default function End({ score, handleEndClick }) {
+import { motion } from "framer-motion";
+import { forwardRef } from "react";
+
+const End = forwardRef(({ score, handleEndClick }, ref) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-12">
+    <div ref={ref} className="flex flex-col items-center justify-center gap-12">
       <h1 className="max-w-xs text-center text-2xl font-bold text-stone-800">
         You answered correctly {score}&nbsp;out of 6 questions!
       </h1>
@@ -20,4 +23,7 @@ export default function End({ score, handleEndClick }) {
       </div>
     </div>
   );
-}
+});
+
+const MotionEnd = motion(End);
+export default MotionEnd;

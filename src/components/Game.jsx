@@ -4,9 +4,10 @@ import { nanoid } from "nanoid";
 import { shuffle } from "lodash";
 import axios from "axios";
 
-import Question from "./Question";
-import Start from "./Start";
-import End from "./End";
+import MotionQuestion from "./Question";
+import MotionStart from "./Start";
+import MotionEnd from "./End";
+import { AnimatePresence } from "framer-motion";
 
 export default function Game() {
   const [gameState, setGameState] = useState("start");
@@ -17,9 +18,9 @@ export default function Game() {
   const [categoryId, setCategoryId] = useState(0);
   const [difficultyLevel, setDifficultyLevel] = useState("easy");
   const [sessionToken, setSessionToken] = useState("");
-  const refGameState = useRef(gameState);
 
   async function getQuestions() {
+    console.log("getting questions...");
     axios
       .get(
         `https://opentdb.com/api.php?amount=6${
@@ -30,14 +31,14 @@ export default function Game() {
         const data = response.data;
         if (data.response_code === 0) {
           createQuestions(data.results);
-        } else {
-          resetToken();
+        } else if (data.response_code === 4) {
+          console.log("you answered all questions");
         }
       })
       .catch((error) => console.log(error));
   }
 
-  async function resetToken() {
+  async function emptyQuestions() {
     axios
       .get(
         `https://opentdb.com/api_token.php?command=reset&token=${sessionToken}`
@@ -54,13 +55,11 @@ export default function Game() {
   }, []);
 
   useEffect(() => {
-    if (refGameState.current === gameState) return;
-    refGameState.current = gameState;
     getQuestions();
-  }, [gameState]);
+  }, [difficultyLevel, categoryId]);
 
   useEffect(() => {
-    resetToken();
+    emptyQuestions();
   }, []);
 
   function createQuestions(data) {
@@ -141,6 +140,7 @@ export default function Game() {
     setQuestions(null);
     setCurrentQuestionIndex(0);
     setScore(0);
+    getQuestions();
     setGameState(state);
   }
 
@@ -157,18 +157,33 @@ export default function Game() {
 
   return (
     <>
-      {gameState === "start" && (
-        <Start
-          categoryId={categoryId}
-          handleSelectCategory={handleSelectCategory}
-          difficultyLevel={difficultyLevel}
-          handleSelectDifficulty={handleSelectDifficulty}
-          handleStartClick={handleStartClick}
-        />
-      )}
-      {gameState === "game" && questions && (
-        <>
-          <Question
+      <AnimatePresence mode="wait">
+        {gameState === "start" && (
+          <MotionStart
+            layout
+            key="start"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{
+              opacity: 0,
+              scale: 0.95,
+              transition: { duration: 0.15 },
+            }}
+            transition={{ type: "spring", duration: 1, bounce: 0.25 }}
+            categoryId={categoryId}
+            handleSelectCategory={handleSelectCategory}
+            difficultyLevel={difficultyLevel}
+            handleSelectDifficulty={handleSelectDifficulty}
+            handleStartClick={handleStartClick}
+          />
+        )}
+        {gameState === "game" && questions && (
+          <MotionQuestion
+            layout
+            key="question"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             question={questions[currentQuestionIndex]}
             currentQuestionIndex={currentQuestionIndex}
             selectedAnswerId={selectedAnswerId}
@@ -176,11 +191,20 @@ export default function Game() {
             handleCheckAnswer={handleCheckAnswer}
             handleNextQuestion={handleNextQuestion}
           />
-        </>
-      )}
-      {gameState === "gameEnd" && (
-        <End score={score} handleEndClick={handleEndClick} />
-      )}
+        )}
+
+        {gameState === "gameEnd" && (
+          <MotionEnd
+            key="end"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 75, damping: 15 }}
+            score={score}
+            handleEndClick={handleEndClick}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
