@@ -30,25 +30,14 @@ const Start = forwardRef(
           <h1 className="logo font-serif text-6xl font-extrabold text-stone-800">
             Quizzical
           </h1>
-          <h3 className="text-lg font-medium text-stone-500">
+          <h2 className="text-lg font-medium text-stone-500">
             Play stupid games, win stupid prizes!
-          </h3>
+          </h2>
         </div>
         <div className="flex w-full flex-col items-center gap-6">
-          {/* <h2 className="font-semibold text-stone-500">Choose difficulty</h2> */}
-          <ul className="flex w-full">
+          <ul className="flex w-full gap-2">
             {LEVELS.map((level, index) => (
-              <li
-                key={index}
-                className="group/wrapper box-border w-full flex-1 grow 
-              [&_input[type='radio']:checked_~_label_span]:-translate-y-[6px]
-              [&_input[type='radio']:checked_~_label_span]:border-sky-500
-              [&_input[type='radio']:checked_~_label_span]:bg-sky-50 
-              [&_input[type='radio']:checked_~_label_span]:text-sky-600
-              [&_input[type='radio']:checked_~_label_span]:first:border-r-2
-              [&_input[type='radio']:checked_~_label_span]:hover:-translate-y-[6px]
-              [&_input[type='radio']:checked_~_label]:bg-sky-500"
-              >
+              <li key={index} className="group flex w-full">
                 <input
                   type="radio"
                   id={level}
@@ -60,32 +49,29 @@ const Start = forwardRef(
                   }}
                   className="peer absolute z-0 appearance-none opacity-0"
                 />
-                <label
+                <motion.label
+                  variants={variants}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="pressed"
+                  transition={spring}
                   htmlFor={level}
-                  className={`group/label z-10 block select-none rounded-2xl bg-stone-200 transition group-first/wrapper:rounded-r-none group-last/wrapper:rounded-l-none group-even/wrapper:rounded-none`}
+                  className={`relative flex
+        w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white py-2 px-4 text-center text-sm font-semibold text-stone-600 shadow-resting 
+        shadow-stone-900/[0.01] transition-colors hover:border-stone-300  group-first:rounded-r-lg group-first:pr-3 group-last:rounded-l-lg group-last:pl-3 group-even:rounded-lg group-hover:z-20 peer-checked:z-30 peer-checked:border-cyan-700 peer-checked:text-cyan-800
+        peer-checked:shadow-active peer-checked:shadow-stone-900/[0.03] peer-focus-visible:border-stone-400
+        `}
                 >
-                  <span className="block -translate-y-[6px] rounded-2xl border-2 border-stone-200 bg-white px-4 py-3 text-center font-semibold text-stone-600 transition group-first/wrapper:rounded-r-none group-first/wrapper:border-r-0 group-last/wrapper:rounded-l-none group-even/wrapper:rounded-none group-hover/label:-translate-y-[8px] group-active/label:-translate-y-[2px] group-active/label:bg-stone-50">
-                    {capitalize(level)}
-                  </span>
-                </label>
+                  {capitalize(level)}
+                </motion.label>
               </li>
             ))}
           </ul>
         </div>
         <div className="flex flex-col items-center gap-6">
-          {/* <h2 className="font-semibold text-stone-500">Select a category</h2> */}
-          <ul className="flex flex-wrap justify-center gap-3">
+          <ul className="flex flex-wrap justify-center gap-2">
             {CATEGORIES.map((cat, index) => (
-              <li
-                key={index}
-                className="
-              [&_input[type='radio']:checked_~_label_span]:-translate-y-[4px]
-              [&_input[type='radio']:checked_~_label_span]:border-sky-500
-              [&_input[type='radio']:checked_~_label_span]:bg-sky-50 
-              [&_input[type='radio']:checked_~_label_span]:text-sky-600
-              [&_input[type='radio']:checked_~_label_span]:hover:-translate-y-[4px]
-              [&_input[type='radio']:checked_~_label]:bg-sky-500"
-              >
+              <li key={index} className="">
                 <input
                   type="radio"
                   id={cat.id}
@@ -98,12 +84,18 @@ const Start = forwardRef(
                   className="radio group peer absolute z-0 appearance-none opacity-0"
                 />
                 <motion.label
+                  variants={variants}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="pressed"
+                  transition={spring}
                   htmlFor={cat.id}
-                  className={`group block select-none rounded-xl bg-stone-200 transition`}
+                  className={`
+        relative flex w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white py-2 px-4
+text-center text-sm font-semibold text-stone-600 shadow-resting shadow-stone-900/[0.01] transition-colors hover:border-stone-300  peer-checked:z-20 peer-checked:border-cyan-700 peer-checked:text-cyan-800 peer-checked:shadow-active peer-checked:shadow-stone-900/[0.03] peer-focus-visible:border-stone-400
+        `}
                 >
-                  <span className="block -translate-y-[4px] rounded-xl border-2 border-stone-200 bg-white px-4 py-2 text-center text-sm font-semibold text-stone-600 transition group-hover:-translate-y-[6px] group-active:-translate-y-[2px] group-active:bg-stone-50">
-                    {cat.name}
-                  </span>
+                  {cat.name}
                 </motion.label>
               </li>
             ))}
@@ -120,3 +112,21 @@ const Start = forwardRef(
 const MotionStart = motion(Start);
 
 export default MotionStart;
+
+const variants = {
+  initial: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.025,
+  },
+  pressed: {
+    scale: 0.95,
+  },
+};
+
+const spring = {
+  type: "spring",
+  damping: 15,
+  stiffness: 300,
+};
