@@ -25,9 +25,9 @@ const Start = forwardRef(
           <h1 className="logo font-serif text-6xl font-extrabold text-stone-800">
             Quizzical
           </h1>
-          <h2 className="text-lg font-medium text-stone-500">
+          <h4 className="text-sm font-medium text-stone-500">
             Play stupid games, win stupid prizes!
-          </h2>
+          </h4>
         </div>
         <div className="flex w-full flex-col items-center gap-6">
           <ul className="flex w-full gap-2">

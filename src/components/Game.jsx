@@ -25,27 +25,28 @@ export default function Game() {
       .get(
         `https://opentdb.com/api.php?amount=6${
           categoryId !== 0 ? `&category=${categoryId}` : ""
-        }&difficulty=${difficultyLevel}&type=multiple&token=${sessionToken}`
+        }&difficulty=${difficultyLevel}&type=multiple` // ADD TOKEN '&token=${sessionToken}'
       )
       .then((response) => {
         const data = response.data;
-        if (data.response_code === 0) {
-          createQuestions(data.results);
-        } else if (data.response_code === 4) {
-          console.log("you answered all questions");
-        }
+        createQuestions(data.results);
+        // if (data.response_code === 0) {
+        //   createQuestions(data.results);
+        // } else if (data.response_code === 4) {
+        //   console.log("you answered all questions");
+        // }
       })
       .catch((error) => console.log(error));
   }
 
-  async function emptyQuestions() {
-    axios
-      .get(
-        `https://opentdb.com/api_token.php?command=reset&token=${sessionToken}`
-      )
-      .then((response) => setSessionToken(response.data.token))
-      .catch((error) => console.log(error));
-  }
+  // async function emptyQuestions() {
+  //   axios
+  //     .get(
+  //       `https://opentdb.com/api_token.php?command=reset&token=${sessionToken}`
+  //     )
+  //     .then((response) => setSessionToken(response.data.token))
+  //     .catch((error) => console.log(error));
+  // }
 
   useEffect(() => {
     axios
@@ -58,9 +59,9 @@ export default function Game() {
     getQuestions();
   }, [difficultyLevel, categoryId]);
 
-  useEffect(() => {
-    emptyQuestions();
-  }, []);
+  // useEffect(() => {
+  //   emptyQuestions();
+  // }, []);
 
   function createQuestions(data) {
     const nextQuestions = data.map((question) => {

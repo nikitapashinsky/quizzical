@@ -1,36 +1,35 @@
 import { motion } from "framer-motion";
-import { toString } from "lodash";
 import { forwardRef } from "react";
 import { Button } from "./Button";
 
 const End = forwardRef(({ score, handleEndClick, questions }, ref) => {
-  const sortedAnswers = questions.map(({ answers }) => {
-    return [...answers].sort(
-      (a, b) => Number(b.isCorrect) - Number(a.isCorrect)
-    );
-  });
-  sortedAnswers.map((answer) => {
-    answer.map(({ answer, isCorrect, isSelected }) => {
-      console.log(answer, isCorrect, isSelected);
-    });
-  });
   return (
-    <div ref={ref} className="flex flex-col items-center justify-center gap-12">
-      <div className="flex flex-col items-center gap-4">
-        <h2 className="text-lg font-medium text-stone-500">You've got</h2>
-        <h1 className="max-w-xs text-center font-serif text-6xl font-extrabold tracking-tighter text-stone-800">
-          {score} / 6
-        </h1>
-        <h2 className="text-center text-lg font-medium text-stone-500">
-          questions correct!
-        </h2>
+    <div ref={ref} className="flex flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center gap-6 py-20">
+        <div className="flex w-full flex-col items-center justify-center gap-3">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-stone-500">
+            Your score
+          </h2>
+          <h1 className="max-w-xs text-center font-serif text-6xl font-extrabold tracking-tighter text-stone-800">
+            {score} / 6
+          </h1>
+        </div>
+        <p className="max-w-xs text-center text-sm font-medium text-stone-500 md:text-base">
+          I hope you had fun and learned something&nbsp;new :)
+        </p>
       </div>
-      <div className="flex flex-col gap-4 rounded-[20px] border-2 border-stone-200 bg-white p-6">
+      <motion.div
+        layout
+        className="flex w-full flex-col gap-8 rounded-[20px] border-2 border-stone-200 bg-white p-6 pb-8"
+      >
         {questions.map(({ question, answers }) => {
           return (
-            <div className="flex flex-col gap-4 border-t-2 border-stone-100 pt-4 first:border-0 first:pt-0">
+            <motion.div
+              layout
+              className="flex flex-col gap-4 border-t-2 border-stone-100 pt-6 first:border-0 first:pt-0"
+            >
               <h3 className="font-semibold text-stone-600">{question}</h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {answers
                   .sort(
                     (a, b) =>
@@ -55,11 +54,11 @@ const End = forwardRef(({ score, handleEndClick, questions }, ref) => {
                     );
                   })}
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
-      <div className="flex w-full flex-col gap-4">
+      </motion.div>
+      <div className="stop sticky bottom-0 flex w-full flex-col gap-4 bg-gradient-to-t from-stone-100 via-[#f5f5f4_66%] px-6 py-8">
         <Button variant="primary" handleClick={() => handleEndClick("game")}>
           Play again
         </Button>

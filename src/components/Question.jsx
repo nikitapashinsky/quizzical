@@ -27,8 +27,9 @@ const Question = forwardRef(
 
     return (
       <motion.div
+        layout
         ref={ref}
-        className="flex w-full flex-1 flex-col items-center justify-center gap-6"
+        className="flex w-full flex-1 flex-col items-center gap-6"
       >
         <LayoutGroup>
           <AnimatePresence mode="popLayout">
@@ -39,9 +40,9 @@ const Question = forwardRef(
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex max-h-[380px] w-full flex-1 items-center justify-center rounded-[20px] p-8 text-center"
+              className="flex max-h-[380px] w-full flex-1 items-center justify-center rounded-[20px] text-center"
             >
-              <h1 className="font-serif text-3xl font-bold leading-10 text-stone-800 ">
+              <h1 className="font-serif text-3xl font-bold leading-10 text-stone-800">
                 {question.question}
               </h1>
             </motion.div>
@@ -59,7 +60,7 @@ const Question = forwardRef(
                 initial="initial"
                 animate="final"
                 exit="exit"
-                className="flex w-full flex-col justify-center gap-3"
+                className="flex w-full flex-col gap-3"
               >
                 {question.answers.map((answer, index) => {
                   return (
