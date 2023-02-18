@@ -16,11 +16,6 @@ const Start = forwardRef(
     },
     ref
   ) => {
-    const topicVariants = {
-      initial: { boxShadow: "0 4px 0 #e7e5e4", translateY: 0 },
-      hover: { boxShadow: "0 4px 0 #e7e5e4", translateY: -2 },
-      active: { boxShadow: "0 1px 0 #e7e5e4", translateY: 4 },
-    };
     return (
       <div
         ref={ref}
@@ -57,8 +52,8 @@ const Start = forwardRef(
                   transition={spring}
                   htmlFor={level}
                   className={`relative flex
-        w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white py-2 px-4 text-center text-sm font-semibold text-stone-600 shadow-resting 
-        shadow-stone-900/[0.01] transition-colors hover:border-stone-300  group-first:rounded-r-lg group-first:pr-3 group-last:rounded-l-lg group-last:pl-3 group-even:rounded-lg group-hover:z-20 peer-checked:z-30 peer-checked:border-cyan-700 peer-checked:text-cyan-800
+        w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white py-2 px-4 text-center text-sm font-semibold text-stone-600 shadow-resting shadow-stone-900/[0.01] 
+        transition-colors will-change-transform hover:border-stone-300  group-first:rounded-r-lg group-first:pr-3 group-last:rounded-l-lg group-last:pl-3 group-even:rounded-lg group-hover:z-20 peer-checked:z-30 peer-checked:border-cyan-700 peer-checked:text-cyan-800
         peer-checked:shadow-active peer-checked:shadow-stone-900/[0.03] peer-focus-visible:border-stone-400
         `}
                 >
@@ -91,8 +86,8 @@ const Start = forwardRef(
                   transition={spring}
                   htmlFor={cat.id}
                   className={`
-        relative flex w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white py-2 px-4
-text-center text-sm font-semibold text-stone-600 shadow-resting shadow-stone-900/[0.01] transition-colors hover:border-stone-300  peer-checked:z-20 peer-checked:border-cyan-700 peer-checked:text-cyan-800 peer-checked:shadow-active peer-checked:shadow-stone-900/[0.03] peer-focus-visible:border-stone-400
+        relative flex w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 border-stone-200 bg-white py-2 px-4 text-center
+text-sm font-semibold text-stone-600 shadow-resting shadow-stone-900/[0.01] transition-colors will-change-transform hover:border-stone-300  peer-checked:z-20 peer-checked:border-cyan-700 peer-checked:text-cyan-800 peer-checked:shadow-active peer-checked:shadow-stone-900/[0.03] peer-focus-visible:border-stone-400
         `}
                 >
                   {cat.name}

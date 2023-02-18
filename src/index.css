@@ -8,6 +8,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 }
+
 @supports (font-variation-settings: normal) {
   h1 {
     font-variation-settings: "SOFT" 100;

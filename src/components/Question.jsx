@@ -143,11 +143,9 @@ const answerVariants = {
 
 const questionVariants = {
   initial: {
-    scale: 0.25,
     x: 500,
   },
   animate: {
-    scale: 1,
     x: 0,
     transition: {
       type: "spring",

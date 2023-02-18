@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import MotionIconResult from "./IconResult";
 
 const Answer = forwardRef(
@@ -35,35 +35,25 @@ const Answer = forwardRef(
           transition={spring}
           htmlFor={answer.id}
           className={`
-        relative flex w-full transform-gpu cursor-pointer select-none items-center justify-center rounded-[20px] border-2 py-3 px-5 text-center font-semibold
+        relative flex w-full cursor-pointer select-none items-center justify-center rounded-[20px] border-2 py-3 px-5 text-center font-semibold  will-change-transform
         ${
           correctAnswer
-            ? `z-20 cursor-default border-[#449933] bg-[#ECF0EA] text-[#449933] peer-checked:border-[#449933] peer-checked:text-[#449933]`
+            ? `z-20 cursor-default border-[#449933] bg-[#ECF0EA] px-11 text-[#449933] peer-checked:border-[#449933] peer-checked:text-[#449933]`
             : wrongAnswer
-            ? ` peer-checked:[#CF5A33] z-20 cursor-default border-[#CF5A33] bg-[#F3EDEA] text-[#CF5A33] peer-checked:border-[#CF5A33]`
+            ? ` peer-checked:[#CF5A33] z-20 cursor-default border-[#CF5A33] bg-[#F3EDEA] px-11 text-[#CF5A33] peer-checked:border-[#CF5A33]`
             : otherAnswers
             ? `cursor-default border-stone-200 bg-stone-50 text-stone-400`
             : `border-stone-200 bg-white text-stone-600 shadow-resting shadow-stone-900/[0.01] transition-colors hover:border-stone-300  peer-checked:z-20 peer-checked:border-cyan-700 peer-checked:text-cyan-800 peer-checked:shadow-active peer-checked:shadow-stone-900/[0.03] peer-focus-visible:border-stone-400`
         }
         `}
         >
-          {correctAnswer && (
+          {(correctAnswer || wrongAnswer) && (
             <MotionIconResult
               layout
               classNames="absolute left-[16px] top-[16px]"
-              result="correct"
-              initial={{ x: -16, scale: 0.25 }}
-              animate={{ x: 0, scale: 1 }}
-              transition={spring}
-            />
-          )}
-          {wrongAnswer && (
-            <MotionIconResult
-              layout
-              classNames="absolute left-[16px] top-[16px]"
-              result="wrong"
-              initial={{ x: -16, scale: 0.25 }}
-              animate={{ x: 0, scale: 1 }}
+              result={correctAnswer ? "correct" : "wrong"}
+              initial={{ opacity: 0, x: -24, scale: 0.75 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={spring}
             />
           )}
