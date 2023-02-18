@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
 
-const IconResult = forwardRef(({ result }, ref) => {
+const IconResult = forwardRef(({ result, classNames }, ref) => {
   return (
-    <motion.span layout>
+    <motion.div className="">
       <motion.svg
+        className={`${classNames}`}
         ref={ref}
         width="16"
         height="16"
@@ -28,7 +29,7 @@ const IconResult = forwardRef(({ result }, ref) => {
           />
         )}
       </motion.svg>
-    </motion.span>
+    </motion.div>
   );
 });
 

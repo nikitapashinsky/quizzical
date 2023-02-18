@@ -1,6 +1,7 @@
 import Game from "./components/Game";
 import "@fontsource/work-sans/variable.css";
 import "@fontsource/source-serif-pro/700.css";
+import "@fontsource/fraunces/variable-full.css";
 
 function App() {
   const minHeight = window.innerHeight;

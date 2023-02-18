@@ -3,7 +3,7 @@ import { LEVELS } from "./data";
 import { CATEGORIES } from "./data";
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
-import Button from "./Button";
+import { Button } from "./Button";
 
 const Start = forwardRef(
   (
@@ -27,7 +27,7 @@ const Start = forwardRef(
         className="flex flex-col items-center justify-center gap-12"
       >
         <div className="flex flex-col items-center gap-4 text-center">
-          <h1 className="font-serif text-6xl font-black text-stone-800">
+          <h1 className="logo font-serif text-6xl font-extrabold text-stone-800">
             Quizzical
           </h1>
           <h3 className="text-lg font-medium text-stone-500">

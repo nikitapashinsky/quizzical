@@ -1,4 +1,10 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require("tailwindcss/defaultTheme");
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
+
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   future: {
@@ -7,8 +13,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Work SansVariable"],
-        serif: ["Source Serif Pro"],
+        sans: ["Work SansVariable", ...defaultTheme.fontFamily.sans],
+        serif: ["FrauncesVariable", ...defaultTheme.fontFamily.serif],
       },
       boxShadow: {
         resting: `
@@ -24,5 +30,16 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [addVariablesForColors],
 };
+
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}

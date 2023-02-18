@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import he from "he";
 import { nanoid } from "nanoid";
 import { shuffle } from "lodash";
 import axios from "axios";
 
-import MotionQuestion from "./Question";
+import { MotionQuestion } from "./Question";
 import MotionStart from "./Start";
 import MotionEnd from "./End";
 import { AnimatePresence } from "framer-motion";
@@ -162,14 +162,14 @@ export default function Game() {
           <MotionStart
             layout
             key="start"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{
               opacity: 0,
-              scale: 0.95,
-              transition: { type: "spring", duration: 0.75, bounce: 0.18 },
+              scale: 0.9,
+              transition: { type: "spring", stiffness: 300, damping: 23 },
             }}
-            transition={{ type: "spring", duration: 1, bounce: 0.25 }}
+            transition={{ type: "spring", stiffness: 150, damping: 23 }}
             categoryId={categoryId}
             handleSelectCategory={handleSelectCategory}
             difficultyLevel={difficultyLevel}
@@ -186,7 +186,7 @@ export default function Game() {
             exit={{
               opacity: 0,
               scale: 0.9,
-              transition: { type: "spring", duration: 0.75, bounce: 0.18 },
+              transition: { type: "spring", stiffness: 150, damping: 23 },
             }}
             question={questions[currentQuestionIndex]}
             currentQuestionIndex={currentQuestionIndex}
@@ -200,10 +200,10 @@ export default function Game() {
         {gameState === "gameEnd" && (
           <MotionEnd
             key="end"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 75, damping: 15 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 150, damping: 23 }}
             score={score}
             handleEndClick={handleEndClick}
           />

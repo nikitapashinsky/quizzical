@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { forwardRef } from "react";
-import Button from "./Button";
+import { Button } from "./Button";
 
 const End = forwardRef(({ score, handleEndClick }, ref) => {
   return (
