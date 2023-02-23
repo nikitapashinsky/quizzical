@@ -158,6 +158,7 @@ const questionVariants = {
   },
   exit: {
     x: -500,
+    opacity: 0,
     transition: { type: "spring", duration: 0.5, bounce: 0 },
   },
 };
