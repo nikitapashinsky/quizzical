@@ -2,7 +2,7 @@ import { LayoutGroup, motion } from "framer-motion";
 import { MotionAnswer } from "./Answer";
 import { Button } from "./Button";
 import { AnimatePresence } from "framer-motion";
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 
 const Question = forwardRef(
   (
@@ -145,9 +145,11 @@ const answerVariants = {
 const questionVariants = {
   initial: {
     x: 500,
+    opacity: 0,
   },
   animate: {
     x: 0,
+    opacity: 1,
     transition: {
       type: "spring",
       stiffness: 150,
